@@ -1,0 +1,244 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>KJSIEIT | Placement</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- All Plugin Css -->
+		<link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+
+		<!-- Style & Common Css -->
+		<link rel="stylesheet" href="{% static 'css/common.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+		<style>
+#chartdiv {
+  width: 80%;
+  height: 300px;
+}
+#chartdivs {
+  width: 80%;
+  height: 300px;
+}
+
+</style>
+
+    </head>
+
+<body>
+
+    <!-- Navigation Start  -->
+		{% include "home_dashboard.html" %}
+		<!-- Navigation End  -->
+
+	<input type="text" value="{{ extc }}" id="extc" hidden>
+	<input type="text" value="{{ etrx }}" id="etrx" hidden>
+	<input type="text" value="{{ comps }}" id="comps" hidden>
+	<input type="text" value="{{ it }}" id="it" hidden>
+                                <section class="profile-detail">
+                                            <div class="container">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+
+													<div class="panel panel-default">
+								<div class="panel-heading">
+									<i class="fa fa-graduation-cap fa-fw"></i> Placement Highlights (Current Year)
+								</div>
+														<br>
+														<center><div id="chartdivs"></div></center>
+											</div>
+
+														<div class="panel panel-default">
+								<div class="panel-heading">
+									<i class="fa fa-graduation-cap fa-fw"></i> Placement Highlights (Previous Year)
+								</div>
+														<div id="chartdiv"></div>
+											</div>
+                                                        <div class="basic-information">
+                                <div class="panel panel-default">
+								<div class="panel-heading">
+									<i class="fa fa-leaf fa-fw"></i> Carrier Support Opportunities:
+								</div>
+													<!-- /.panel-heading -->
+								<div class="panel-body">
+
+								<ul>
+									<li>Expert Talks by National , International Speakers.</li>
+									<li>Interview Guidance</li>
+									<li>Center of Excellence</li>
+									<li>Robotic Automation</li>
+									<li>Grooming Sessions by Alumni</li>
+									<li>Software Development Cell</li>
+									<li>Job Fair</li>
+									<li>Internship</li>
+									<li>Riidl Startup</li>
+									<li>Joint Placement Drives</li>
+								</ul>
+								</div>
+							</div>
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<i class="fa fa-cog fa-fw"></i> Placement Process:
+								</div>
+													<!-- /.panel-heading -->
+								<div class="panel-body">
+								<span class="service-tag">Signups from Interested Students</span>
+								<span class="service-tag">Pre Placement Talk</span>
+								<span class="service-tag">Selection Process</span>
+								<span class="service-tag">Result Declaration</span>
+								<span class="service-tag">Email Communication</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
+        {% include "footer.html" %}
+
+		<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+		<script src="{% static 'js/bootsnav.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+
+
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_material);
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create chart instance
+var chart = am4core.create("chartdiv", am4charts.PieChart);
+
+// Add data
+chart.data = [{
+  "department": "IT",
+  "placed": 20
+}, {
+  "department": "EXTC",
+  "placed": 40
+}, {
+  "department": "COMPS",
+  "placed": 60
+}, {
+  "department": "ETRX",
+  "placed": 30
+}];
+
+// Add and configure Series
+var pieSeries = chart.series.push(new am4charts.PieSeries());
+pieSeries.dataFields.value = "placed";
+pieSeries.dataFields.category = "department";
+pieSeries.innerRadius = am4core.percent(50);
+pieSeries.ticks.template.disabled = true;
+pieSeries.labels.template.disabled = true;
+
+var rgm = new am4core.RadialGradientModifier();
+rgm.brightnesses.push(-0.8, -0.8, -0.5, 0, - 0.5);
+pieSeries.slices.template.fillModifier = rgm;
+pieSeries.slices.template.strokeModifier = rgm;
+pieSeries.slices.template.strokeOpacity = 0.4;
+pieSeries.slices.template.strokeWidth = 0;
+
+chart.legend = new am4charts.Legend();
+chart.legend.position = "right";
+
+}); // end am4core.ready()
+</script>
+
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_material);
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+// Create chart instance
+var chart = am4core.create("chartdivs", am4charts.XYChart3D);
+var its = document.getElementById("it").value;
+var extcs = document.getElementById("extc").value;
+var etrxs = document.getElementById("etrx").value;
+var compss = document.getElementById("comps").value;
+
+// Add data
+chart.data = [{
+  "department": "IT",
+  "placed": its
+}, {
+  "department": "EXTC",
+  "placed": extcs
+}, {
+  "department": "COMPS",
+  "placed": compss
+}, {
+  "department": "ETRX",
+  "placed": etrxs
+}];
+
+// Create axes
+let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "department";
+categoryAxis.renderer.labels.template.rotation = 270;
+categoryAxis.renderer.labels.template.hideOversized = false;
+categoryAxis.renderer.minGridDistance = 20;
+categoryAxis.renderer.labels.template.horizontalCenter = "right";
+categoryAxis.renderer.labels.template.verticalCenter = "middle";
+categoryAxis.tooltip.label.rotation = 270;
+categoryAxis.tooltip.label.horizontalCenter = "right";
+categoryAxis.tooltip.label.verticalCenter = "middle";
+
+let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.title.text = "Students Placed";
+valueAxis.title.fontWeight = "bold";
+
+// Create series
+var series = chart.series.push(new am4charts.ColumnSeries3D());
+series.dataFields.valueY = "placed";
+series.dataFields.categoryX = "department";
+series.name = "Placed";
+series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+series.columns.template.fillOpacity = .8;
+
+var columnTemplate = series.columns.template;
+columnTemplate.strokeWidth = 2;
+columnTemplate.strokeOpacity = 1;
+columnTemplate.stroke = am4core.color("#FFFFFF");
+
+columnTemplate.adapter.add("fill", function(fill, target) {
+  return chart.colors.getIndex(target.dataItem.index);
+})
+
+columnTemplate.adapter.add("stroke", function(stroke, target) {
+  return chart.colors.getIndex(target.dataItem.index);
+})
+
+chart.cursor = new am4charts.XYCursor();
+chart.cursor.lineX.strokeOpacity = 0;
+chart.cursor.lineY.strokeOpacity = 0;
+
+}); // end am4core.ready()
+</script>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+{% load static %}
+<html>
+<head>
+    <style>
+        @page {
+            size: a4 portrait;
+
+            @frame content_frame {          /* Content Frame */
+                left: 50pt; width: 512pt; top: 90pt; height: 632pt;
+            }
+            @frame footer_frame {           /* Another static Frame */
+                -pdf-frame-content: footer_content;
+                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+            }
+        }
+
+th {
+  height: 50px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+    </style>
+    </head>
+     <body>
+    <div id="header_content">
+        <center>
+            <h1>K.J. Somaiya Institute of Engineering & Information Technology</h1>
+            <p style="font-size:12px;">Accredited by NAAC with "A" grade (3.21 CGPA) for 5 years.</p>
+            <p style="font-size:12px;">Three programs accredited by the National Board of Accreditation.</p>
+            <p style="font-size:12px;">Best College awarded by University of Mumbai, ISTE(MH) and CSI (MUMBAI).</p>
+        </center>
+        </div>
+     <br>
+     <p style="text-align:center; font-size:13px;">Company : <b>{{ company }}</b></p>
+     <p style="text-align:center; font-size:13px;">Date : <b>{{ comps.date }}</b></p>
+     <br>
+     <table cellpadding="5">
+         <tr style="color:#da0833;font-size:14px;">
+             <th width="20%">#</th>
+             <th>Name</th>
+             <th>Username</th>
+             <th>Branch</th>
+         </tr>
+         {% for eligible in context %}
+     <tr style="text-align:center;font-size:12px;">
+         <td width="20%">{{ forloop.counter }}</td>
+         <td>{{ eligible.stud_name }}</td>
+         <td>{{ eligible.stud_user }}</td>
+         <td>{{ eligible.branch }}</td>
+     </tr>
+              {% endfor %}
+     </table>
+    </body>
+    </html>

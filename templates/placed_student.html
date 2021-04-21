@@ -1,0 +1,187 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>TNP Admin | Placed Student</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- first jQuery -->
+        <!-- All Plugin Css -->
+		<link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+
+		<!-- Style & Common Css -->
+		<link rel="stylesheet" href="{% static 'css/common.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    </head>
+
+
+    <body>
+
+    	{% include "admin_dashboard.html" %}
+        <form action="/tnp_admin/display_placed" method="post">
+      {% csrf_token %}
+            <div class="input-group">
+<select name="filter" onchange="form.submit();" class="input-group form-control" style="margin:30px;width:40%;cursor:pointer;">
+  <option value="" disabled selected>Sort By</option>
+  <option value="Company">Company</option>
+  <option value="Branch">Branch</option>
+  <option value="CTC">CTC</option>
+</select>
+<div class="input-group" style="width:40%;margin:30px;">
+    <input type="text" class="form-control" placeholder="Search.." id="myInput"/>
+    <span class="input-group-addon">
+        <i class="fa fa-search"></i>
+    </span>
+</div>
+            </div>
+</form>
+
+        <center><b><h3>Placed Students</h3></b></center>
+{% if placed.count > 0 %}
+        <center><p style="color:#da0833"><b>Sorted by {{ filter }}</b></p></center>
+
+
+     {% if filter == "Company" %}
+      {% regroup placed by comp_name as compName %}
+      {% for comp_name in compName %}
+      <div class="companies table-responsive" style="width:80%; margin-left:50px">
+      <table class="table table-bordered table-striped mb-0 table-responsive table1">
+          <thead>
+          <tr>
+              <th scope="col" style="color: #DA0833">{{ comp_name.grouper }}</th>
+              <th scope="col" style="color: #DA0833">Name</th>
+              <th scope="col" style="color: #DA0833">Username</th>
+              <th scope="col" style="color: #DA0833">ID No</th>
+              <th scope="col" style="color: #DA0833">Branch</th>
+              <th scope="col" style="color: #DA0833">CTC</th>
+          </tr>
+          </thead>
+
+          {% for student in comp_name.list %}
+                      <tbody id="myTabless">
+                       <tr>
+                           <th scope="row" width="10%">{{ forloop.counter }}</th>
+                           <td>{{ student.stud_name }}</td>
+                           <td>{{ student.stud_user }}</td>
+                           <td>{{ student.id_no }}</td>
+                           <td>{{ student.branch }}</td>
+                           <td>{{ student.ctc }}</td>
+                       </tr>
+                      </tbody>
+                {% endfor %}
+          </table>
+        </div>
+        {% endfor %}
+
+      {% elif filter == "Branch"%}
+
+        {% regroup placed by branch as compName %}
+      {% for branch in compName %}
+      <div class="companies table-responsive" style="width:80%; margin-left:50px">
+      <table class="table table-bordered table-striped mb-0 table2">
+          <thead>
+          <tr>
+              <th scope="col" style="color: #DA0833">{{ branch.grouper }}</th>
+              <th scope="col" style="color: #DA0833">Name</th>
+              <th scope="col" style="color: #DA0833">Username</th>
+              <th scope="col" style="color: #DA0833">ID No</th>
+              <th scope="col" style="color: #DA0833">Company</th>
+              <th scope="col" style="color: #DA0833">CTC</th>
+          </tr>
+          </thead>
+
+          {% for student in branch.list %}
+                      <tbody id="myTables">
+                       <tr>
+                           <th scope="row" width="10%">{{ forloop.counter }}</th>
+                           <td>{{ student.stud_name }}</td>
+                           <td>{{ student.stud_user }}</td>
+                           <td>{{ student.id_no }}</td>
+                           <td>{{ student.comp_name }}</td>
+                           <td>{{ student.ctc }}</td>
+                       </tr>
+                      </tbody>
+                {% endfor %}
+          </table>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="table-wrapper-scroll-y my-custom-scrollbar table-responsive">
+            <table class="table table-bordered table-striped mb-0 table3">
+                <thead>
+                          <tr>
+                            <th scope="col" style="color: #DA0833">#</th>
+                              <th scope="col" style="color: #DA0833">Name</th>
+                            <th scope="col" style="color: #DA0833">Username</th>
+                            <th scope="col" style="color: #DA0833">Id Number</th>
+                            <th scope="col" style="color: #DA0833">Company</th>
+                            <th scope="col" style="color: #DA0833">Branch</th>
+                              <th scope="col" style="color: #DA0833">CTC</th>
+                          </tr>
+                </thead>
+                <tbody id="myTable">
+        {% for student in placed %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ student.stud_name }}</td>
+            <td>{{ student.stud_user }}</td>
+            <td>{{ student.id_no }}</td>
+            <td>{{ student.comp_name }}</td>
+            <td>{{ student.branch }}</td>
+            <td>{{ student.ctc }}</td>
+        </tr>
+      {% endfor %}
+                </tbody>
+            </table>
+            </div>
+      {% endif %}
+{% else %}
+  <p>No students placed yet</p>
+{% endif %}
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+
+    $("#myTables tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+
+    $("#myTabless tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+
+  });
+});
+</script>
+<script>
+$(document).ready(function(){
+$('table.table1').DataTable();
+});
+</script>
+<script>
+$(document).ready(function(){
+$('table.table2').DataTable();
+});
+</script>
+<script>
+$(document).ready(function(){
+$('table.table3').DataTable();
+});
+</script>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+		<script src="{% static 'js/bootsnav.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+	</body>
+</html>

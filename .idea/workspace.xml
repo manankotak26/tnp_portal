@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ad1f4ed6-e362-400d-a00a-647b310cfc5f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/tnp_portal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/tnp_portal.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/Desert.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/Desert_yfkuPE6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/Hydrangeas.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/Hydrangeas_e2Y7RwO.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/Jellyfish.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/Koala.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/Koala_LMunPSW.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/images/Lighthouse.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/student/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0002_user_name.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0003_resume.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0004_auto_20191210_1302.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0005_resume_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0006_auto_20191213_1543.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0007_auto_20191216_1035.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0008_resume_name.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0009_auto_20191216_1636.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0010_auto_20191217_1147.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0011_auto_20191218_1741.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0012_resume_sperc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0013_auto_20200207_2237.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0014_user_photo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0015_remove_user_photo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/migrations/0016_user_branch.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/student/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/student/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/student/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add_company.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add_company.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add_student.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add_student.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/adminDashb.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/adminDashb.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin_dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/check_eligible.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/check_eligible.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/display_company.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/display_company.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/display_student.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/display_student.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/eligible_pdf.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/eligible_pdf.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/footer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/pdf.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/pdf.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/placed_student.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/placed_student.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/resume_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/resume_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/resume_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/resume_update.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/student_company.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/student_company.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/tnp_admin/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0002_auto_20191207_2056.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0003_company.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0004_studentseligible.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0005_auto_20191216_1636.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0006_auto_20191217_1033.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0007_auto_20191217_1147.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0008_studentplaced.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0009_auto_20191217_2357.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0010_studentplaced_stud_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0011_company_attach.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0012_auto_20200220_2343.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0013_admin_dept.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/migrations/0014_admin_role.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/tnp_admin/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/tnp_admin/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_admin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/tnp_admin/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_portal/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tnp_portal/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_portal/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/tnp_portal/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_portal/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/tnp_portal/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tnp_portal/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/tnp_portal/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1YhnG3f0kZ9H4tldabECO6Fjdj3" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Desktop\tnp_portal\static\css" />
+      <recent name="C:\Users\Admin\Desktop\tnp_portal\static\fonts" />
+      <recent name="C:\Users\Admin\Desktop\tnp_portal\static\js" />
+      <recent name="C:\Users\Admin\Desktop\tnp_portal\static" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ad1f4ed6-e362-400d-a00a-647b310cfc5f" name="Default Changelist" comment="" />
+      <created>1583403601422</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1583403601422</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.css" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="463" y="118" key="FileChooserDialogImpl" timestamp="1583403713939">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1583403713939" />
+    <state x="378" y="186" key="com.intellij.ide.util.TipDialog" timestamp="1585038532243">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="378" y="186" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1585038532243" />
+  </component>
+</project>

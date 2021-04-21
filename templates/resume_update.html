@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css" rel="stylesheet">
+<title>Student | Resume</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+
+    <!-- Style & Common Css -->
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+}
+
+#regForm {
+  background-color: #ffffff;
+  margin: 100px auto;
+  padding: 40px;
+  width: 80%;
+  min-width: 300px;
+}
+
+h1 {
+  text-align: center;
+}
+
+input {
+  padding: 8px;
+  width: 100%;
+  font-size: 17px;
+  border: 1px solid #aaaaaa;
+}
+
+textarea{
+  width: 100%;
+  border: 1px solid #aaaaaa;
+}
+
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  border-color: #FF0000;
+}
+
+textarea.invalid {
+  border-color: #FF0000;
+}
+
+select{
+width:100%;
+border: 1px solid #aaaaaa;
+height:40px;
+}
+
+select.invalid {
+  border-color: #FF0000;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+button {
+  background-color: #da0833;
+  color: #ffffff;
+  border: none;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#prevBtn {
+  background-color: #bbbbbb;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #da0833;
+}
+
+.border-class
+{
+  border:thin black solid;
+  margin:20px;
+  border-color:#242c36
+
+}
+
+</style>
+<body>
+{% include "student_dashboard.html" %}
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color: #da0833;">Generate Resume</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <a href="/student/pdf/" class="fa fa-file-pdf-o" style="font-size:20px;" target="_blank">&nbsp;&nbsp;PDF</a>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" style="color:white;">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="login-wrapper" style="margin-top:-150px;">
+  <div class="form-group">
+
+<div class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2">
+
+
+<form id="regForm" method="post" action="/student/resume_update/" enctype="multipart/form-data" class="border-class">
+  {% csrf_token %}
+  <h4>Resume</h4>
+  <!-- One "tab" for each step in the form: -->
+
+  <center><p style="color:red;">{{ lockerror }}</p></center>
+  <center><p style="color:green;">{{ success }}</p></center>
+    {% if error %}
+    {% for error in error %}
+    <center><p style="color:red;">{{ error }}</p></center>
+    {% endfor %}
+    {% endif %}
+
+    {% for resume in resumes %}
+
+    {% if resume.diploma == None %}
+
+  <div class="tab"><h5>Personal Details</h5>
+  <p><label for="number"><b>Id Number :</b></label></p>
+    <p><input type="text" id="number" placeholder="Id Number" class="input-group form-control input-lg checkvalid valid" oninput="this.className = ''" name="number" value="{{ resume.number }}" disabled></p>
+      {% if hn == "Mr." %}
+      <p><select class="input-group form-control checkvalid" oninput="this.className = ''" name="hn">
+        <option value="" disabled selected>Select Option</option>
+        <option value="Mr." selected>Mr.</option>
+        <option value="Ms.">Ms.</option>
+      </select></p>
+      {% else %}
+      <p><select class="input-group form-control checkvalid" oninput="this.className = ''" name="hn">
+        <option value="" disabled selected>Select Option</option>
+        <option value="Mr.">Mr.</option>
+        <option value="Ms." selected>Ms.</option>
+      {% endif %}
+    <p><label for="name"><b>Name :</b></label></p>
+    <p><input type="text" id="name" placeholder="Name" class="input-group form-control input-lg checkvalid valid" oninput="this.className = ''" name="name" value="{{ name }}"></p>
+      <p><label><b>Gender :</b></label></p>
+    <div class="col-md-12" style="margin-bottom: 15px;">
+      <div class="row">
+        {% if resume.gender == "Male" %}
+        <div class="col-md-3 col-sm-3">
+          Male
+          <input type="radio" value="Male" name="gender" checked>
+        </div>
+        <div class="col-md-3 col-sm-3">
+          Female
+          <input type="radio" value="Female" name="gender">
+        </div>
+          <div class="col-md-3 col-sm-3">
+          Others
+          <input type="radio" value="Others" name="gender">
+        </div>
+        {% elif resume.gender == "Female" %}
+        <div class="col-md-3 col-sm-3">
+          Male
+          <input type="radio" value="Male" name="gender">
+        </div>
+        <div class="col-md-3 col-sm-3">
+          Female
+          <input type="radio" value="Female" name="gender" checked>
+        </div>
+          <div class="col-md-3 col-sm-3">
+          Others
+          <input type="radio" value="Others" name="gender">
+        </div>
+          {% else %}
+          <div class="col-md-3 col-sm-3">
+          Male
+          <input type="radio" value="Male" name="gender">
+        </div>
+        <div class="col-md-3 col-sm-3">
+          Female
+          <input type="radio" value="Female" name="gender">
+        </div>
+          <div class="col-md-3 col-sm-3">
+          Others
+          <input type="radio" value="Others" name="gender" checked>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div>
+    <select class="input-group form-control checkvalid valid" oninput="this.className = ''" name="branch">
+        {% if resume.branch == "Computer" %}
+        <option value="" disabled>Select Branch</option>
+        <option value="Computer" selected>Computer</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+        <option value="Electronics">Electronics</option>
+        {% elif resume.branch == "Information Technology" %}
+         <option value="" disabled>Select Branch</option>
+        <option value="Computer">Computer</option>
+        <option value="Information Technology" selected>Information Technology</option>
+        <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+        <option value="Electronics">Electronics</option>
+        {% elif resume.branch == "Electronics & Telecommunication" %}
+         <option value="" disabled>Select Branch</option>
+        <option value="Computer">Computer</option>
+        <option value="Information Technology" >Information Technology</option>
+        <option value="Electronics & Telecommunication" selected>Electronics & Telecommunication</option>
+        <option value="Electronics">Electronics</option>
+        {% else %}
+         <option value="" disabled>Select Branch</option>
+        <option value="Computer">Computer</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+        <option value="Electronics" selected>Electronics</option>
+        {% endif %}
+    </select>
+    </div>
+    <p><label for="dob"><b>Date Of Birth :</b></label></p>
+    <input type="date" placeholder="dd/mm/yyy" id="dob" value="{{ resume.date|date:'Y-m-d' }}" name="dob" class="valid checkvalid input-group form-control input-lg" oninput="this.className = ''">
+   <p><label for="lk"><b>Languages Known :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid" id="lk" placeholder="Languages Known" name="languages" oninput="this.className = ''">{{ resume.languages }}</textarea></p>
+    <p><label for="addr"><b>Address :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid" placeholder="Address" id="addr" name="address" oninput="this.className = ''">{{ resume.address }}</textarea></p>
+    <p><label for="cont"><b>Contact :</b></label></p>
+    <input type="tel" placeholder="Contact" class="valid checkvalid input-group form-control input-lg" id="cont" value="{{ resume.phone }}" oninput="this.className = ''" name="phoneInput"></p>
+    <p></p>
+  </div>
+
+
+  <div class="tab"><h5>Education Details</h5>
+    {% if resume.sem1 == None %}
+      <p><label for="sem1_i"><b>Sem 1 :</b></label></p>
+      <input type="text" id="sem1_i" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem1">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem1f" accept="image/*">
+    {% else %}
+    <p><label for="sem1_i2"><b>Sem 1 :</b></label></p>
+      <input type="text" id="sem1_i2" placeholder="Marks" class="input-group form-control input-lg" value="{{ resume.sem1 }}" oninput="this.className = ''" name="sem1">
+      <a href="{{ resume.sem1f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem1f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem2 == None %}
+      <p><label for="sem2_i"><b>Sem 2 :</b></label></p>
+      <input type="text" id="sem2_i" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem2">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem2f" accept="image/*">
+    {% else %}
+    <p><label for="sem2_i2"><b>Sem 2 :</b></label></p>
+      <input type="text" value="{{ resume.sem2 }}" id="sem2_i2" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem2">
+      <a href="{{ resume.sem2f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem2f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem3 == None %}
+      <p><label for="sem3_i"><b>Sem 3 :</b></label></p>
+      <input type="text" id="sem3_i" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem3">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem3f" accept="image/*">
+    {% else %}
+    <p><label for="sem3_i2"><b>Sem 3 :</b></label></p>
+      <input type="text" id="sem3_i2" value="{{ resume.sem3 }}" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem3">
+      <a href="{{ resume.sem3f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem3f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem4 == None %}
+      <p><label for="sem4_i"><b>Sem 4 :</b></label></p>
+      <input type="text" id="sem4_i" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem4">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem4f" accept="image/*">
+    {% else %}
+    <p><label for="sem4_i2"><b>Sem 4 :</b></label></p>
+      <input type="text" id="sem4_i2" placeholder="Marks" value="{{ resume.sem4 }}" class="input-group form-control input-lg" oninput="this.className = ''" name="sem4">
+      <a href="{{ resume.sem4f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem4f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem5 == None %}
+      <p><label for="sem5_i"><b>Sem 5 :</b></label></p>
+      <input type="text" id="sem5_i" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem5">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem5f" accept="image/*">
+    {% else %}
+    <p><label for="sem5_i2"><b>Sem 5 :</b></label></p>
+      <input type="text" id="sem5_i2" placeholder="Marks" class="input-group form-control input-lg" value="{{ resume.sem5 }}" oninput="this.className = ''" name="sem5">
+      <a href="{{ resume.sem5f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem5f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem6 == None %}
+      <p><label for="sem6_i"><b>Sem 6 :</b></label></p>
+      <input type="text" id="sem6_i" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem6">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem6f" accept="image/*">
+    {% else %}
+    <p><label for="sem6_i2"><b>Sem 6 :</b></label></p>
+      <input type="text" id="sem6_i2" placeholder="Marks" class="input-group form-control input-lg" value="{{ resume.sem6 }}" oninput="this.className = ''" name="sem6">
+      <a href="{{ resume.sem6f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem6f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem7 == None %}
+      <p><label for="sem7_i"><b>Sem 7 :</b></label></p>
+      <input type="text" id="sem7_i" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem7">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem7f" accept="image/*">
+    {% else %}
+    <p><label for="sem6_i2"><b>Sem 7 :</b></label></p>
+      <input type="text" id="sem7_i2" placeholder="Marks" class="input-group form-control input-lg" value="{{ resume.sem7 }}" oninput="this.className = ''" name="sem7">
+      <a href="{{ resume.sem7f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem7f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem8 == None %}
+      <p><label for="sem8_i"><b>Sem 8 :</b></label></p>
+      <input type="text" id="sem8_i" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem8">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem8f" accept="image/*">
+    {% else %}
+    <p><label for="sem8_i2"><b>Sem 8 :</b></label></p>
+      <input type="text" id="sem8_i2" placeholder="Marks" class="input-group form-control input-lg" value="{{ resume.sem8 }}" oninput="this.className = ''" name="sem8">
+      <a href="{{ resume.sem8f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem8f" accept="image/*">
+    {% endif %}
+
+      <p><label for="agg"><b>Aggregate :</b></label></p>
+      <input type="text" id="agg" placeholder="Aggregate" class="input-group form-control input-lg valid" value="{{ resume.agg }}" oninput="this.className = ''" name="aggregate">
+
+    <p></p>
+  </div>
+
+
+  <div class="tab"><h5>SSC</h5>
+    <p><label for="ssc_m"><b>Marks :</b></label></p>
+    <input type="text" id="ssc_m" placeholder="Marks" value="{{ resume.ssc_marks }}" class="valid input-group form-control input-lg" oninput="this.className = ''" name="ssc">
+    <p><label for="ssc_i"><b>Institute :</b></label></p>
+    <input type="text" id="ssc_i" placeholder="Institute" value="{{ resume.ssc_institute }}" class="valid checkvalid input-group form-control input-lg" oninput="this.className = ''" name="ssc_inst">
+    <p><label for="ssc_y"><b>Year</b></label></p>
+    <input type="text" id="ssc_y" placeholder="Passing Year" value="{{ resume.ssc_year }}" class="valid checkvalid input-group form-control input-lg" oninput="this.className = ''" name="ssc_year">
+    <a href="{{ resume.sscf.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sscf" accept="image/*">
+  <p></p>
+  </div>
+
+
+  <div id="hsc">
+  <div class="tab"><h5>HSC</h5>
+    <p><label for="marks"><b>Marks :</b></label></p>
+    <input type="text" id="marks" placeholder="Marks" value="{{ resume.hsc_marks }}" class="valid input-group form-control input-lg" oninput="this.className = ''" name="hsc">
+    <p><label for="inst"><b>Institute :</b></label></p>
+    <input type="text" id="inst" placeholder="Institute" value="{{ resume.hsc_institute }}" class="valid input-group form-control input-lg" oninput="this.className = ''" name="hsc_inst">
+    <p><label for="year"><b>Year :</b></label></p>
+    <input type="text" id="year" placeholder="Passing Year" value="{{ resume.hsc_year }}" class="valid input-group form-control input-lg" oninput="this.className = ''" name="hsc_year">
+<a href="{{ resume.hscf.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="hscf" accept="image/*">
+  <p></p>
+  </div>
+  </div>
+
+
+  <div class="tab"><h5>Project</h5>
+      <p><label for="be_proj"><b>BE Project :</b></label></p>
+      <textarea class="checkvalid form-control rounded-0 valid" id="be_proj" placeholder="BE Project" oninput="this.className = ''" name="be_proj">{{ resume.be_proj }}</textarea>
+      <p><label for="te_proj"><b>TE Project :</b></label></p>
+      <textarea class="checkvalid form-control rounded-0 valid" id="te_proj" placeholder="TE Project" oninput="this.className = ''" name="te_proj">{{ resume.te_proj }}</textarea>
+    <p></p>
+  </div>
+
+  <div class="tab"><h5>Achievements</h5>
+    <p><label for="tech_prof"><b>Technical Proficiency :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid tech_prof" id="tech_prof" placeholder="Technical Proficiency" oninput="this.className = ''" name="tech_prof">{{ resume.tech_prof }}</textarea>
+    <p><label for="achieve"><b>Awards and Achievements :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid achieve" id="achieve" placeholder="Awards and Achievements" oninput="this.className = ''" name="awards">{{ resume.awards }}</textarea>
+  <p></p>
+  </div>
+
+  <div class="tab"><h5>Hobbies</h5>
+    <p><label for="hobbies"><b>Hobbies :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid hobbies" id="hobbies" placeholder="Hobbies" oninput="this.className = ''" name="hobbies">{{ resume.hobbies }}</textarea>
+    <p><label for="obj"><b>Career Objective :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid obj" id="obj" placeholder="Objective" oninput="this.className = ''" name="objective">{{ resume.objective }}</textarea>
+  <p></p>
+  </div>
+
+  {% else %}
+
+
+  <div class="tab"><h5>Personal Details</h5>
+  <p><label for="number"><b>Id Number :</b></label></p>
+    <p><input type="text" id="number" placeholder="Id Number" class="input-group form-control input-lg checkvalid valid" oninput="this.className = ''" name="number" value="{{ resume.number }}" disabled></p>
+    {% if hn == "Mr." %}
+      <p><select class="input-group form-control checkvalid" oninput="this.className = ''" name="hn">
+        <option value="" disabled selected>Select Option</option>
+        <option value="Mr." selected>Mr.</option>
+        <option value="Ms.">Ms.</option>
+      </select></p>
+      {% else %}
+      <p><select class="input-group form-control checkvalid" oninput="this.className = ''" name="hn">
+        <option value="" disabled selected>Select Option</option>
+        <option value="Mr.">Mr.</option>
+        <option value="Ms." selected>Ms.</option>
+      {% endif %}
+    <p><label for="named"><b>Name :</b></label></p>
+    <p><input type="text" id="named" placeholder="Name" class="valid input-group form-control input-lg checkvalid" oninput="this.className = ''" name="name" value="{{ name }}"></p>
+    <p><label><b>Gender :</b></label></p>
+    <div class="col-md-12" style="margin-bottom: 15px;">
+      <div class="row">
+        {% if resume.gender == "Male" %}
+        <div class="col-md-3 col-sm-3">
+          Male
+          <input type="radio" value="Male" name="gender" checked>
+        </div>
+        <div class="col-md-3 col-sm-3">
+          Female
+          <input type="radio" value="Female" name="gender">
+        </div>
+          <div class="col-md-3 col-sm-3">
+          Others
+          <input type="radio" value="Others" name="gender">
+        </div>
+        {% elif resume.gender == "Female" %}
+        <div class="col-md-3 col-sm-3">
+          Male
+          <input type="radio" value="Male" name="gender">
+        </div>
+        <div class="col-md-3 col-sm-3">
+          Female
+          <input type="radio" value="Female" name="gender" checked>
+        </div>
+          <div class="col-md-3 col-sm-3">
+          Others
+          <input type="radio" value="Others" name="gender">
+        </div>
+          {% else %}
+          <div class="col-md-3 col-sm-3">
+          Male
+          <input type="radio" value="Male" name="gender">
+        </div>
+        <div class="col-md-3 col-sm-3">
+          Female
+          <input type="radio" value="Female" name="gender">
+        </div>
+          <div class="col-md-3 col-sm-3">
+          Others
+          <input type="radio" value="Others" name="gender" checked>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div>
+    <select class="input-group form-control checkvalid valid" oninput="this.className = ''" name="branch">
+        {% if resume.branch == "Computer" %}
+        <option value="" disabled>Select Branch</option>
+        <option value="Computer" selected>Computer</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+        <option value="Electronics">Electronics</option>
+        {% elif resume.branch == "Information Technology"%}
+         <option value="" disabled>Select Branch</option>
+        <option value="Computer">Computer</option>
+        <option value="Information Technology" selected>Information Technology</option>
+        <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+        <option value="Electronics">Electronics</option>
+        {% elif resume.branch == "Electronics & Telecommunication"%}
+         <option value="" disabled>Select Branch</option>
+        <option value="Computer">Computer</option>
+        <option value="Information Technology" >Information Technology</option>
+        <option value="Electronics & Telecommunication" selected>Electronics & Telecommunication</option>
+        <option value="Electronics">Electronics</option>
+        {% else %}
+         <option value="" disabled>Select Branch</option>
+        <option value="Computer">Computer</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+        <option value="Electronics" selected>Electronics</option>
+        {% endif %}
+    </select>
+    </div>
+    <p><label for="dobd"><b>Date Of Birth :</b></label></p>
+    <input type="date" placeholder="dd/mm/yyy" id="dobd" value="{{ resume.date|date:'Y-m-d' }}" name="dob" class="valid checkvalid input-group form-control input-lg" oninput="this.className = ''">
+   <p><label for="lkd"><b>Languages Known :</b></label></p>
+      <textarea class="checkvalid form-control rounded-0 valid" id="lkd" placeholder="Languages Known" name="languages" oninput="this.className = ''">{{ resume.languages }}</textarea>
+     <p><label for="addrd"><b>Address :</b></label></p>
+      <textarea class="checkvalid form-control rounded-0 valid" id="addrd" placeholder="Address" name="address" oninput="this.className = ''">{{ resume.address }}</textarea>
+    <p><label for="contd"><b>Contact :</b></label></p>
+      <input type="tel" placeholder="Contact" id="contd" class="valid checkvalid input-group form-control input-lg" value="{{ resume.phone }}" oninput="this.className = ''" name="ph">
+      <p></p>
+  </div>
+
+
+  <div class="tab"><h5>Education Details</h5>
+    {% if resume.sem3 == None %}
+      <p><label for="sem3_id"><b>Sem 3 :</b></label></p>
+      <input type="text" id="sem3_id" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem3">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem3f" accept="image/*">
+    {% else %}
+    <p><label for="sem3_i2d"><b>Sem 3 :</b></label></p>
+      <input type="text" id="sem3_i2d" value="{{ resume.sem3 }}" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem3">
+      <a href="{{ resume.sem3f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem3f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem4 == None %}
+      <p><label for="sem4_id"><b>Sem 4 :</b></label></p>
+      <input type="text" id="sem4_id" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem4">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem4f" accept="image/*">
+    {% else %}
+    <p><label for="sem4_i2d"><b>Sem 4 :</b></label></p>
+      <input type="text" id="sem4_i2d" placeholder="Marks" value="{{ resume.sem4 }}" class="input-group form-control input-lg" oninput="this.className = ''" name="sem4">
+      <a href="{{ resume.sem4f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem4f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem5 == None %}
+      <p><label for="sem5_id"><b>Sem 5 :</b></label></p>
+      <input type="text" id="sem5_id" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem5">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem5f" accept="image/*">
+    {% else %}
+    <p><label for="sem5_i2d"><b>Sem 5 :</b></label></p>
+      <input type="text" id="sem5_i2d" placeholder="Marks" class="input-group form-control input-lg" value="{{ resume.sem5 }}" oninput="this.className = ''" name="sem5">
+      <a href="{{ resume.sem5f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem5f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem6 == None %}
+      <p><label for="sem6_id"><b>Sem 6 :</b></label></p>
+      <input type="text" id="sem6_id" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem6">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem6f" accept="image/*">
+    {% else %}
+    <p><label for="sem6_i2d"><b>Sem 6 :</b></label></p>
+      <input type="text" id="sem6_i2d" placeholder="Marks" class="input-group form-control input-lg" value="{{ resume.sem6 }}" oninput="this.className = ''" name="sem6">
+      <a href="{{ resume.sem6f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem6f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem7 == None %}
+      <p><label for="sem7_id"><b>Sem 7 :</b></label></p>
+      <input type="text" id="sem7_id" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem7">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem7f" accept="image/*">
+    {% else %}
+    <p><label for="sem6_i2d"><b>Sem 7 :</b></label></p>
+      <input type="text" id="sem7_i2d" placeholder="Marks" class="input-group form-control input-lg" value="{{ resume.sem7 }}" oninput="this.className = ''" name="sem7">
+      <a href="{{ resume.sem7f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem7f" accept="image/*">
+    {% endif %}
+
+    {% if resume.sem8 == None %}
+      <p><label for="sem8_id"><b>Sem 8 :</b></label></p>
+      <input type="text" id="sem8_id" placeholder="Marks" class="input-group form-control input-lg" oninput="this.className = ''" name="sem8">
+       <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem8f" accept="image/*">
+    {% else %}
+    <p><label for="sem8_i2d"><b>Sem 8 :</b></label></p>
+      <input type="text" id="sem8_i2d" placeholder="Marks" class="input-group form-control input-lg" value="{{ resume.sem8 }}" oninput="this.className = ''" name="sem8">
+      <a href="{{ resume.sem8f.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sem8f" accept="image/*">
+    {% endif %}
+
+      <p><label for="aggd"><b>Aggregate :</b></label></p>
+      <input type="text" id="aggd" placeholder="Aggregate" class="valid input-group form-control input-lg" value="{{ resume.agg }}" oninput="this.className = ''" name="aggregate">
+
+    <p></p>
+  </div>
+
+
+  <div class="tab"><h5>SSC</h5>
+    <p><label for="ssc_md"><b>Marks :</b></label></p>
+    <input type="text" id="ssc_md" placeholder="Marks" value="{{ resume.ssc_marks }}" class="valid input-group form-control input-lg" oninput="this.className = ''" name="ssc">
+    <p><label for="ssc_id"><b>Institute :</b></label></p>
+    <input type="text" id="ssc_id" placeholder="Institute" value="{{ resume.ssc_institute }}" class="valid checkvalid input-group form-control input-lg" oninput="this.className = ''" name="ssc_inst"></p>
+    <p><label for="ssc_yd"><b>Year :</b></label></p>
+    <input type="text" id="ssc_yd" placeholder="Passing Year" value="{{ resume.ssc_year }}" class="valid checkvalid input-group form-control input-lg" oninput="this.className = ''" name="ssc_year"></p>
+    <a href="{{ resume.sscf.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="sscf" accept="image/*">
+  <p></p>
+  </div>
+
+  <div class="tab"><h5>Diploma</h5>
+    <p><label for="diploma_m"><b>Marks :</b></label></p>
+    <input type="text" id="diploma_m" placeholder="Marks" value="{{ resume.diploma }}" class="valid input-group form-control input-lg" oninput="this.className = ''" name="diplo">
+    <p><label for="diploma_i"><b>Institute :</b></label></p>
+    <input type="text" id="diploma_i" placeholder="Institute" value="{{ resume.diploma_inst }}" class="valid input-group form-control input-lg" oninput="this.className = ''" name="diploi"></p>
+    <p><label for="diploma_y"><b>Year :</b></label></p>
+    <input type="text" id="diploma_y" placeholder="Passing Year" value="{{ resume.diploma_year }}" class="valid input-group form-control input-lg" oninput="this.className = ''" name="diploy"></p>
+    <a href="{{ resume.diplomaf.url }}" download>View</a>
+      <input type="file" class="input-group form-control input-lg" oninput="this.className = ''" name="diplomaf" accept="image/*">
+  <p></p>
+  </div>
+
+  <div class="tab"><h5>Project</h5>
+    <p><label for="be_projd"><b>BE Project :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid" id="be_projd" placeholder="BE Project" oninput="this.className = ''" name="be_proj">{{ resume.be_proj }}</textarea>
+    <p><label for="te_projd"><b>TE Project :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid" id="te_projd" placeholder="TE Project" oninput="this.className = ''" name="te_proj">{{ resume.te_proj }}</textarea>
+  <p></p>
+  </div>
+
+
+  <div class="tab"><h5>Achievements</h5>
+    <p><label for="tech_profd"><b>Technical Proficiency :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid tech_profd" id="tech_profd" placeholder="Technical Proficiency" oninput="this.className = ''" name="tech_prof">{{ resume.tech_prof }}</textarea>
+    <p><label for="achieved"><b>Awards and Achievements :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid achieved" id="achieved" placeholder="Awards and Achievements" oninput="this.className = ''" name="awards">{{ resume.awards }}</textarea>
+  <p></p>
+  </div>
+
+  <div class="tab"><h5>Hobbies & Objective</h5>
+    <p><label for="hobbiesd"><b>Hobbies :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid hobbiesd" id="hobbiesd" placeholder="Hobbies" oninput="this.className = ''" name="hobbies">{{ resume.hobbies }}</textarea>
+    <p><label for="objd"><b>Career Objective :</b></label></p>
+    <textarea class="checkvalid form-control rounded-0 valid objd" id="objd" placeholder="Objective" oninput="this.className = ''" name="objective">{{ resume.objective }}</textarea>
+  <p></p>
+  </div>
+
+  {% endif %}
+    {% endfor %}
+
+  <div style="overflow:auto;">
+    <div style="float:right;">
+      <button type="button" id="prevBtn" onclick="nextPrev(-1)" style="padding: 10px 20px;">Previous</button>
+      <button type="button" id="nextBtn" onclick="nextPrev(1)" style="padding: 10px 20px; color:#fff">Next</button>
+    </div>
+  </div>
+  <!-- Circles which indicates the steps of the form: -->
+  <div style="text-align:center;margin-top:40px;">
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+    <span class="step"></span>
+  </div>
+</form>
+</div>
+</div>
+</section>
+
+<script>
+var currentTab = 0; // Current tab is set to be the first tab (0)
+showTab(currentTab); // Display the current tab
+
+function showTab(n) {
+  // This function will display the specified tab of the form...
+  var x = document.getElementsByClassName("tab");
+  x[n].style.display = "block";
+  //... and fix the Previous/Next buttons:
+  if (n == 0) {
+    document.getElementById("prevBtn").style.display = "none";
+  } else {
+    document.getElementById("prevBtn").style.display = "inline";
+  }
+  if (n == (x.length - 1)) {
+    document.getElementById("nextBtn").innerHTML = "Submit";
+  } else {
+    document.getElementById("nextBtn").innerHTML = "Next";
+  }
+  //... and run a function that will display the correct step indicator:
+  fixStepIndicator(n)
+}
+
+function nextPrev(n) {
+  // This function will figure out which tab to display
+  var x = document.getElementsByClassName("tab");
+  // Exit the function if any field in the current tab is invalid:
+  if (n == 1 && !validateForm()) return false;
+  // Hide the current tab:
+  x[currentTab].style.display = "none";
+  // Increase or decrease the current tab by 1:
+  currentTab = currentTab + n;
+  // if you have reached the end of the form...
+  if (currentTab >= x.length) {
+    // ... the form gets submitted:
+    document.getElementById("regForm").submit();
+    return false;
+  }
+  // Otherwise, display the correct tab:
+  showTab(currentTab);
+}
+
+function validateForm() {
+  // This function deals with validation of the form fields
+  var x, y, i, valid = true;
+  x = document.getElementsByClassName("tab");
+  y = x[currentTab].getElementsByClassName("valid");
+  // A loop that checks every input field in the current tab:
+  for (i = 0; i < y.length; i++) {
+    // If a field is empty...
+    if (y[i].value == "") {
+      // add an "invalid" class to the field:
+      y[i].className += " invalid";
+      // and set the current valid status to false
+      valid = false;
+    }
+
+  }
+  // If the valid status is true, mark the step as finished and valid:
+  if (valid) {
+    document.getElementsByClassName("step")[currentTab].className += " finish";
+  }
+  return valid; // return the valid status
+}
+
+function fixStepIndicator(n) {
+  // This function removes the "active" class of all steps...
+  var i, x = document.getElementsByClassName("step");
+  for (i = 0; i < x.length; i++) {
+    x[i].className = x[i].className.replace(" active", "");
+  }
+  //... and adds the "active" class on the current step:
+  x[n].className += " active";
+}
+	</script>
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/bootsnav.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

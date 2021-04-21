@@ -1,0 +1,61 @@
+<!doctype html>
+{% load static %}
+<html class="no-js" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>TNP Admin | Add Admin</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- All Plugin Css -->
+		<link rel="stylesheet" href="{% static 'css/plugins.css' %}">
+
+		<!-- Style & Common Css -->
+		<link rel="stylesheet" href="{% static 'css/common.css' %}">
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    </head>
+
+    <body bgcolor="#E6E6FA">
+
+<!-- Navigation Start  -->
+{% include "admin_dashboard.html" %}
+
+<!-- Navigation End  -->
+
+<!-- section start -->
+<section class="login-wrapper">
+<div class="container">
+
+
+<div class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2">
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+<h3>Add Admin (Form)</h3>
+<p style="color:green">{{ validate }}</p>
+<p style="color:red">{{ invalidate }}</p>
+<input type="text" class="form-control input-lg" placeholder="Name" name="name" required>
+<input type="email" class="form-control input-lg" placeholder="Username" pattern="^[a-zA-Z0-9.]+@somaiya\.edu$" name="uname" required>
+    <select name="branch" class="form-control input-lg" required>
+        <option value="" selected disabled>Branch</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Computer">Computer</option>
+        <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+        <option value="Electronics">Electronics</option>
+    </select>
+<input type="submit" class="btn btn-primary" value="Add Admin">
+
+</form>
+</div>
+</div>
+</section>
+<!-- section End -->
+
+        <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+		<script src="{% static 'js/bootsnav.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TNP Admin | Eligible</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+
+        $(document).on('change','input[type=checkbox]' ,function(){
+                    var all=[];
+            $('input[type=checkbox]:checked').each(function(){
+                all.push($(this).val());
+            });
+            console.log(all);
+            document.getElementById('hidden').value = all;
+        });
+
+
+        $(document).ready(function(){
+    $('#select_all').on('click',function(){
+        if(this.checked){
+            $('.checkbox').each(function(){
+                this.checked = true;
+            });
+        }else{
+             $('.checkbox').each(function(){
+                this.checked = false;
+            });
+        }
+    });
+
+    $('.checkbox').on('click',function(){
+        if($('.checkbox:checked').length == $('.checkbox').length){
+            $('#select_all').prop('checked',true);
+        }else{
+            $('#select_all').prop('checked',false);
+        }
+    });
+});
+    </script>
+</head>
+
+<body>
+    {% include "admin_dashboard.html" %}
+    <form action="/tnp_admin/check_eligible" method="POST">
+        {% csrf_token %}
+    <center>
+<table class="table table-bordered table-striped mb-0" style="width:50%; margin-top:30px;" id="table1">
+<thead>
+    <tr>
+        <th scope="col" style="color: #DA0833">#</th>
+        <th scope="col" style="color: #DA0833">Name</th>
+        <th scope="col" style="color: #DA0833">Username</th>
+        <th scope="col" style="color: #DA0833">Branch</th>
+        <th scope="col" style="color: #DA0833"><input type="checkbox" id="select_all" /></th>
+    </tr>
+<tbody>
+    {% for student in temp %}
+    {% for obj in studentObj %}
+    {% if student == obj.user %}
+    <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ obj.name }}</td>
+        <td>{{ student }}</td>
+        <td>{{ obj.branch }}</td>
+        <td scope="col" style="color: #DA0833"><input type="checkbox" class="checkbox" name="chk[]" value="{{ student }}"></td>
+    </tr>
+    {% endif %}
+    {% endfor %}
+{% endfor %}
+</tbody>
+</table>
+        <input type="text" id="hidden" name="hidden" style="display:none">
+        <input type="text" name="company" value="{{ c_name }}" style="display:none">
+        <button id="btn" name="btn" class="btn btn-primary">Send Mail</button>
+    </center>
+</form>
+
+</body>
+</html>
